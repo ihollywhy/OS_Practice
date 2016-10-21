@@ -1,4 +1,4 @@
-#### Here is the analysis if we dont have line 13
+#### Here is the analysis if we dont have line 13 in child func
 
 - The output is depend on which thread(child or parent) is scheduled. For sample, if child is scheduled to execute when counter = 26, then pthread_exit(NULL). However, in the func void \*child1(void \*arg), we know that the mutex1 will be locked every time enter the loop.
 - the mutex1 here in the child should be unlock every time after used. Although there is a command pthread_mutex_unlock(&mutex_1) in the child, it could not be execute under the condition that counter > 25 because of pthread_exit(NULL) command. Due to the loss of necessary unlock, the output will be halt since a lock mutex cannot be entered. While, if counter≤ 25 and child is scheduled, the command pthread_mutex_unlock(&mutex_1) can be executed since there is no other command can block it and then just continue the loop. 
